@@ -29,7 +29,7 @@ Practicing core data structures from scratch in c++ (No STL) Implementing the un
 #### Memory Cleanup
 - clear()
 
-## Stack
+## Stack using LinkedList
 **Status:** In Progress
 
 ### Done
