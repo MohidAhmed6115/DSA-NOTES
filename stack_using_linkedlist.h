@@ -23,20 +23,11 @@ public:
 	void pop(){
 
 		if (top == nullptr) return;
-
-		
 		Node<T> *currentNode = top;
-		if (top->next == nullptr){
-			top = currentNode->next;
-			delete currentNode;
-			currentNode = nullptr;
-		}
-
-		while(currentNode->next->next != NULL){
-			currentNode = currentNode->next;
-		}
-		delete currentNode->next;
-		currentNode->next = NULL;
+		top = currentNode->next;
+		delete currentNode;
+		currentNode = nullptr;
+		return;
 	}
 
 
@@ -90,3 +81,4 @@ public:
 		}
 	}
 };
+

@@ -30,6 +30,7 @@ public:
 			newNode->next = NULL;
 			return;
 		}
+		
 		Node<T> *currentNode = head;
 		while(currentNode->next != NULL){		
 			currentNode = currentNode->next;
@@ -112,6 +113,14 @@ public:
 		head = prevNode;
 
 	}
+
+	// void ascending(){
+	// 	Node<T> *currentNode = head;
+	// 	while(currentNode != NULL){
+
+	// 	}
+	// }
+
 	// Return True or False 
 	bool find(T target){
 		Node<T> *currentNode = head;
