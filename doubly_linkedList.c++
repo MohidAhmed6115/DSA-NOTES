@@ -58,6 +58,12 @@ public:
 		if (head == nullptr && tail == nullptr) 
 			throw runtime_error("No Node is inserted");
 
+		if (target == 0){
+			insertAtFront(data);
+			return;
+		}
+
+
 		Node<T> *currentNode = head;
 		Node<T> *nextNode = nullptr;
 		newNode->data = data;
@@ -70,6 +76,11 @@ public:
 				nextNode->prev = newNode;
 				return;
 			}
+
+			if (target == count && currentNode == tail){
+				// Logic yet to be written
+			}
+
 			currentNode = currentNode->next;
 			count++;
 		}
@@ -81,6 +92,11 @@ public:
 		int count = 1;
 		if (head == nullptr && tail == nullptr)
 			throw runtime_error("No Node is inserted");
+
+		if (target == 1){
+			insertAtFront();
+			return;
+		}
 		
 		Node<T> *currentNode = head;
 		Node<T> *prevNode = nullptr;
@@ -92,20 +108,78 @@ public:
 				newNode->next = currentNode;
 				newNode->prev = prevNode;
 			}
+
+			if(target == count && currentNode == tail){
+				// Logic yet to be written
+			}
+
 			currentNode = currentNode->next;
 			count++;
 		}
 	}
 
-	void deleteTarget(){
-		
+	void deleteAtFront(){
+		if (head == nullptr && tail == nullptr) 
+			throw runtime_error("List is empty");
+
+		Node<T> *currentNode = head;
+		Node<T> *nextNode = currentNode->next;
+		nextNode->prev = nullptr;
+		head = nextNode;
+		delete currentNode;
+		currentNode = nullptr;
 	}
+
+	void deleteAtEnd(){
+		if (head == nullptr && tail == nullptr)
+			throw runtime_error("List is empty");
+
+		Node<T> *currentNode = tail;
+		Node<T> *prevNode = currentNode->prev;
+		prevNode->next = nullptr;
+		tail = prevNode;
+		delete currentNode;
+		currentNode = nullptr;
+	}
+
+	void deleteTarget(int target){
+		int count = 1;
+		if (head == nullptr && tail == nullptr)
+			throw runtime_error("List is empty");
+
+		Node<T> *currentNode = head;
+		Node<T> *prevNode = nullptr;
+		Node<T> *nextNode = nullptr;
+		while(currentNode != NULL){
+			if (target == count){
+				prevNode = currentNode->prev;
+				nextNode = currentNode->next;
+				prevNode->next = nextNode;
+				nextNode->prev = prevNode;
+				delete currentNode;
+				currentNode = nullptr;
+				return;
+			}
+			currentNode = currentNode->next;
+			count++;
+		}
+
+	}
+
+
 
 	void display(){
 		Node<T> *current = head;
 		while(current != NULL){
 			cout<<current->data<<" ";
 			current = current->next;
+		}
+	}
+	void displayReverse(){
+		Node<T> *current = tail;
+		while(current != NULL){
+			cout<<current->data<<" ";
+			current = current->prev;
 		}
 	}
 };
@@ -119,10 +193,15 @@ int main() {
 	list.insertAtFront(20);
 	list.insertAtEnd(40);
 
-	list.insertAfterTarget(3,30);
+	// list.insertAfterTarget(3,30);
 	// list.insertBeforeTarget(3,30);
+	// list.display();
+	// list.deleteTarget(2);
+	// list.deleteAtFront();
+	// list.deleteAtEnd();
 
-	list.display();
+	// list.display();
+	// list.displayReverse();
 
 	return 0;
 }
