@@ -148,6 +148,7 @@ public:
 
 	void deleteTarget(int target){
 		int count = 1;
+		bool isFound = false;
 		if (head == nullptr && tail == nullptr)
 			throw runtime_error("List is empty");
 
@@ -156,6 +157,7 @@ public:
 		Node<T> *nextNode = nullptr;
 		while(currentNode != NULL){
 			if (target == count){
+				isFound = true;
 				prevNode = currentNode->prev;
 				nextNode = currentNode->next;
 				prevNode->next = nextNode;
@@ -168,8 +170,9 @@ public:
 			count++;
 		}
 
+		if(!isFound)
+			throw("Out of Bound Access");
 	}
-
 
 
 	void display(){
@@ -187,4 +190,3 @@ public:
 		}
 	}
 };
-
