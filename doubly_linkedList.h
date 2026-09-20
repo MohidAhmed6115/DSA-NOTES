@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 using namespace std;
 
@@ -69,6 +70,13 @@ public:
 		newNode->data = data;
 		while(currentNode != NULL){
 			if (target == count){
+				if (currentNode == tail){
+					currentNode->next = newNode;
+					newNode->prev = currentNode;
+					newNode->next = nullptr;
+					tail = newNode;
+					return;
+				}
 				nextNode = currentNode->next;
 				currentNode->next = newNode;
 				newNode->next = nextNode;
@@ -77,9 +85,7 @@ public:
 				return;
 			}
 
-			if (target == count && currentNode == tail){
-				// Logic yet to be written
-			}
+			
 
 			currentNode = currentNode->next;
 			count++;
@@ -94,9 +100,10 @@ public:
 			throw runtime_error("No Node is inserted");
 
 		if (target == 1){
-			insertAtFront();
+			insertAtFront(data);
 			return;
 		}
+
 		
 		Node<T> *currentNode = head;
 		Node<T> *prevNode = nullptr;
@@ -107,10 +114,7 @@ public:
 				prevNode->next = newNode;
 				newNode->next = currentNode;
 				newNode->prev = prevNode;
-			}
-
-			if(target == count && currentNode == tail){
-				// Logic yet to be written
+				return;
 			}
 
 			currentNode = currentNode->next;
@@ -184,24 +188,3 @@ public:
 	}
 };
 
-int main() {
-	DoublyLinkedList<int> list;
-
-	list.insertAtFront(5);
-	list.insertAtFront(10);
-	list.insertAtFront(15);
-	list.insertAtFront(20);
-	list.insertAtEnd(40);
-
-	// list.insertAfterTarget(3,30);
-	// list.insertBeforeTarget(3,30);
-	// list.display();
-	// list.deleteTarget(2);
-	// list.deleteAtFront();
-	// list.deleteAtEnd();
-
-	// list.display();
-	// list.displayReverse();
-
-	return 0;
-}
