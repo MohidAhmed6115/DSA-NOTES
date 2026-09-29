@@ -192,14 +192,3 @@ public:
 
 };
 
-int main (){
-	LinkedList<int> list;
-	list.insertAtEnd(5);
-	list.insertAtEnd(10);
-	list.insertAtEnd(15);
-	list.insertAtEnd(20);
-	list.display();
-	list.deleteAtEnd();
-	cout<<endl;
-	list.display();
-}
