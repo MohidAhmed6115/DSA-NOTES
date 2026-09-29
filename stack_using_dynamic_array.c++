@@ -39,16 +39,14 @@ public:
 		if (elementCount == size){
 			reSize();
 		}
-
+        elementCount++;
 		arr[elementCount] = data;
-
-		elementCount++;
 
 	}
 
 	// Removing the last added element implementing the LIFO "Last In Front Out" approach
 	void pop(){
-		if (elementCount == 0)
+		if (elementCount == -1)
 			throw runtime_error("No elements in stack");
 		
 		elementCount--;
