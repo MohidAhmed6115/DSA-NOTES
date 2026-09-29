@@ -29,37 +29,30 @@ private:
 
 public:
 	
-	// It will return total elements in the array not the top filled index
-	int top(){
-		return arr[elementCount];
-	}
-
-	void push(T data){
+	void enqueue(T data){
 		// Checking if the array size is equal to the total elements present in the array for resizing
 		if (elementCount == size){
 			reSize();
 		}
 
-		arr[elementCount] = data;
+
+		for (int i = elementCount-1; i >= 0; i-- ){
+			arr[i] = arr[i-1];
+		}
+		arr[0] = data;
 
 		elementCount++;
 
 	}
 
 	// Removing the last added element implementing the LIFO "Last In Front Out" approach
-	void pop(){
+	void dequeue(){
 		if (elementCount == 0)
 			throw runtime_error("No elements in stack");
 		
 		elementCount--;
 	}
 
-	// For viewing the elements inside the Stack
-	void view(){
-		for(int i=0;i<elementCount;i++){
-			cout<<arr[i]<<" ";
-		}
-	}
 
 	// Checking if the stack is empty or not 
 	bool isEmpty(){
@@ -74,10 +67,15 @@ public:
 		arr = newArr;
 	}
 
-	T peek(){
-		if (elementCount == 0) throw runtime_error("Stack is Empty")
+	T peekFront(){
+		if (elementCount-1 == 0) throw runtime_error("Queue is empty")
 
 		return arr[elementCount-1];
+	}
+	T peekEnd() {
+		if (elementCount-1 == 0) throw runtime_error("Queue is empty")
+
+		return arr[0];
 	}
 
 	// Destructor
@@ -86,13 +84,3 @@ public:
 	}
 
 };
-
-int main () {
-	
-	Stack<int> s;
-	s.push(5);
-	s.push(10);
-	s.push(20);
-	s.push(30);
-	cout<<s.top();
-}

@@ -146,7 +146,7 @@ public:
 		currentNode = nullptr;
 	}
 
-	void deleteTarget(int target){
+	void deleteByData(int target){
 		int count = 1;
 		bool isFound = false;
 		if (head == nullptr && tail == nullptr)

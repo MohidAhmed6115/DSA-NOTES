@@ -82,7 +82,7 @@ public:
 		
 	}
 
-	void deleteTarget(T target){
+	void deleteByData(T target){
 		Node<T> *currentNode = head;
 		Node<T> *prevNode = nullptr;
 		while(currentNode != nullptr && currentNode->data != target){
@@ -93,6 +93,31 @@ public:
 		delete currentNode;
 		currentNode = nullptr;
 		
+	}
+	
+	void deleteByPosition(T target){
+		Node<T> *currentNode = head;
+		Node<T> *prevNode = nullptr;
+		int pos = 1;
+
+		if (head == nullptr) throw runtime_error("List is Empty")
+
+		if (targe == 1){
+			head = currentNode->next;
+			delete currentNode;
+			currentNode = nullptr;
+		}
+
+		while(currentNode != nullptr){
+			if (pos == target){
+				prevNode->next = currentNode->next;
+				delete currentNode;
+				currentNode = nullptr;
+			}
+			prevNode = currentNode;
+			currentNode = currentNode->next;
+			pos++;
+		}
 	}
 
 	void reverse(){
