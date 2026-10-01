@@ -52,7 +52,47 @@ public:
 		newNode->data = data;
 		newNode->next = currentNode->next;
 		currentNode->next = newNode;
+	}
+	void insertBeforeTarget(T target,T data){
+		
+		Node<T> *currentNode = head;
+		Node<T> *prevNode = nullptr;
+		Node<T> *newNode = new Node<T>;
+		newNode->data = data;
 
+		if (target == head->data) {
+			newNode->next = head;
+			head = newNode;
+			return;
+		}
+
+		while(currentNode != NULL && currentNode->data != target){
+			prevNode = currentNode;
+			currentNode = currentNode->next;
+		}
+		
+		newNode->next = prevNode->next;
+		prevNode->next = newNode;
+	}
+
+	void insertAtPos(T pos,T data){
+		Node<T> *currentNode = head;
+		Node<T> *prevNode = nullptr;
+		Node<T> *newNode = new Node<T>;
+		newNode->data = data;
+
+		int count = 1;
+
+		while ( currentNode != nullptr ) {
+			if (count == pos) {
+				newNode->next = prevNode->next;
+				prevNode->next = newNode;
+				return;
+			}
+			prevNode = currentNode;
+			currentNode = currentNode->next;
+			count++;
+		}
 
 	}
 
@@ -100,9 +140,9 @@ public:
 		Node<T> *prevNode = nullptr;
 		int pos = 1;
 
-		if (head == nullptr) throw runtime_error("List is Empty")
+		if (head == nullptr) throw runtime_error("List is Empty");
 
-		if (targe == 1){
+		if (target == 1){
 			head = currentNode->next;
 			delete currentNode;
 			currentNode = nullptr;
@@ -139,12 +179,7 @@ public:
 
 	}
 
-	// void ascending(){
-	// 	Node<T> *currentNode = head;
-	// 	while(currentNode != NULL){
 
-	// 	}
-	// }
 
 	// Return True or False 
 	bool find(T target){
@@ -192,3 +227,13 @@ public:
 
 };
 
+int main () {
+
+	LinkedList<int> list;
+	list.insertAtEnd(5);
+	list.insertAtEnd(10);
+	list.insertAtEnd(15);
+	list.insertBeforeTarget(5,3);
+	list.display();
+
+}
