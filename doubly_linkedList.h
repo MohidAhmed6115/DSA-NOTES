@@ -16,7 +16,20 @@ private:
 	Node<T> *head = nullptr;
 	Node<T> *tail = nullptr;
 
+	int getSize(){
+		int count = 1;
+		Node<T> *currentNode = head;
+		while(currentNode->next != nullptr){
+			currentNode = currentNode->next;
+			count++;
+		}
+		return count;
+	}
+
 public:
+
+
+
 	// Insertion At Front 
 	void insertAtFront(T data){
 		Node<T> *newNode = new Node<T>;
@@ -84,7 +97,7 @@ public:
 	
 
 	void insertAtPos(int target, T data){
-		// User Will Enter that position and after that position a new Node will be added like if user say 4 than the node will add at 3
+		// User Will Enter that position and after that position a new Node will be added at that position
 		Node<T> *newNode = new Node<T>;
 		int count = 1;
 		if (head == nullptr && tail == nullptr)
@@ -176,6 +189,7 @@ public:
 			cout<<current->data<<" ";
 			current = current->next;
 		}
+		
 	}
 	void displayReverse(){
 		Node<T> *current = tail;
@@ -185,7 +199,3 @@ public:
 		}
 	}
 };
-
-int main () {
-	DoublyLinkedList<int> list;
-}
