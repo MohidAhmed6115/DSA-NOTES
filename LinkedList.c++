@@ -226,14 +226,3 @@ public:
 	}
 
 };
-
-int main () {
-
-	LinkedList<int> list;
-	list.insertAtEnd(5);
-	list.insertAtEnd(10);
-	list.insertAtEnd(15);
-	list.insertBeforeTarget(5,3);
-	list.display();
-
-}

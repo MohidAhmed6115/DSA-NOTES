@@ -52,47 +52,38 @@ public:
 
 	}
 
-	// void insertAfterTarget(int target,T data){
-	// 	// User Will Enter that position and after that position a new Node will be added like if user say 4 than the node will add at 5
-	// 	Node<T> *newNode = new Node<T>;
-	// 	int count = 1;
-	// 	if (head == nullptr && tail == nullptr) 
-	// 		throw runtime_error("No Node is inserted");
 
-	// 	if (target == 0){
-	// 		insertAtFront(data);
-	// 		return;
-	// 	}
+	void insertAfterTarget(T key, T data) {
 
+		Node<T> *currentNode = head;
+		Node<T> newNode = nullptr;
+		while (currentNode != NULL && currentNode->data != key){
+			currentNode = currentNode->next;
+		}
+		
+		newNode->data = data;
+		newNode->next = currentNode->next;
+		currentNode->next = newNode;
 
-	// 	Node<T> *currentNode = head;
-	// 	Node<T> *nextNode = nullptr;
-	// 	newNode->data = data;
-	// 	while(currentNode != NULL){
-	// 		if (target == count){
-	// 			if (currentNode == tail){
-	// 				currentNode->next = newNode;
-	// 				newNode->prev = currentNode;
-	// 				newNode->next = nullptr;
-	// 				tail = newNode;
-	// 				return;
-	// 			}
-	// 			nextNode = currentNode->next;
-	// 			currentNode->next = newNode;
-	// 			newNode->next = nextNode;
-	// 			newNode->prev = currentNode;
-	// 			nextNode->prev = newNode;
-	// 			return;
-	// 		}
+	}
+	void insertBeforeTarget(T key, T data) {
 
-			
+		Node<T> *currentNode = head;
+		Node<T> *prevNode = nullptr;
+		Node<T> newNode = nullptr;
+		while (currentNode != NULL && currentNode->data != key){
+			prevNode = currentNode;
+			currentNode = currentNode->next;
+		}
+		
+		newNode->data = data;
+		newNode->next = prevNode->next;
+		prevNode->next = newNode;
 
-	// 		currentNode = currentNode->next;
-	// 		count++;
-	// 	}
-	// }
+	}
+	
 
-	void insertAtTarget(int target, T data){
+	void insertAtPos(int target, T data){
 		// User Will Enter that position and after that position a new Node will be added like if user say 4 than the node will add at 3
 		Node<T> *newNode = new Node<T>;
 		int count = 1;
@@ -194,3 +185,7 @@ public:
 		}
 	}
 };
+
+int main () {
+	DoublyLinkedList<int> list;
+}
