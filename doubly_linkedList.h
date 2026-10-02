@@ -148,36 +148,50 @@ public:
 		tail = prevNode;
 		delete currentNode;
 		currentNode = nullptr;
-	}
+}
 
-	void deleteByPos(int pos){
-		int count = 1;
-		bool isFound = false;
-		if (head == nullptr && tail == nullptr)
-			throw runtime_error("List is empty");
+void deleteByPos(int pos) {
+    if (head == nullptr && tail == nullptr)
+        throw runtime_error("List is empty");
 
-		Node<T> *currentNode = head;
-		Node<T> *prevNode = nullptr;
-		Node<T> *nextNode = nullptr;
-		while(currentNode != NULL){
-			if (pos == count){
-				isFound = true;
-				prevNode = currentNode->prev;
-				nextNode = currentNode->next;
-				prevNode->next = nextNode;
-				nextNode->prev = prevNode;
-				delete currentNode;
-				currentNode = nullptr;
-				return;
-			}
-			currentNode = currentNode->next;
-			count++;
-		}
+    int size = getSize();
+    if (pos < 1 || pos > size)
+        throw out_of_range("Invalid position");
 
-		if(!isFound)
-			throw runtime_error("Out of Bound Access");
-	}
+    if (pos == 1) {
+        deleteAtFront();
+        return;
+    }
+    if (pos == size) {
+        deleteAtEnd();
+        return;
+    }
 
+    Node<T> *currentNode = nullptr;
+    int count = 1;
+
+    if (pos > size / 2) {
+        // traverse from tail
+        currentNode = tail;
+        while (currentNode != nullptr && count != size - pos + 1) {
+            currentNode = currentNode->prev;
+            count++;
+        }
+    } else {
+        // traverse from head
+        currentNode = head;
+        while (currentNode != nullptr && count != pos) {
+            currentNode = currentNode->next;
+            count++;
+        }
+    }
+
+    Node<T> *prevNode = currentNode->prev;
+    Node<T> *nextNode = currentNode->next;
+    prevNode->next = nextNode;
+    nextNode->prev = prevNode;
+    delete currentNode;
+}
 
 	void display(){
 		if (head == nullptr) {
