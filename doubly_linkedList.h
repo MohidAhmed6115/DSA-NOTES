@@ -150,7 +150,7 @@ public:
 		currentNode = nullptr;
 	}
 
-	void deleteByData(int target){
+	void deleteByPos(int pos){
 		int count = 1;
 		bool isFound = false;
 		if (head == nullptr && tail == nullptr)
@@ -160,7 +160,7 @@ public:
 		Node<T> *prevNode = nullptr;
 		Node<T> *nextNode = nullptr;
 		while(currentNode != NULL){
-			if (target == count){
+			if (pos == count){
 				isFound = true;
 				prevNode = currentNode->prev;
 				nextNode = currentNode->next;
