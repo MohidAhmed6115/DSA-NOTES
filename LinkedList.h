@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
 template <typename T>
@@ -42,19 +43,30 @@ public:
 	}
 
 	void insertAfterTarget(T target,T data){
+		bool isFound = false;
 
 		Node<T> *currentNode = head;
-		while(currentNode != NULL && currentNode->data != target){
+		while(currentNode != NULL){
+			if (currentNode->data == target) {
+				Node<T> *newNode = new Node<T>;
+				newNode->data = data;
+				newNode->next = currentNode->next;
+				currentNode->next = newNode;
+				isFound = true;
+				return;
+			}
 			currentNode = currentNode->next;
 		}
-		Node<T> *newNode = new Node<T>;
 		
-		newNode->data = data;
-		newNode->next = currentNode->next;
-		currentNode->next = newNode;
+		if (!isFound) throw runtime_error("Target Not Found")
+
 	}
 	void insertBeforeTarget(T target,T data){
 		
+		if (head == nullptr) throw runtime_error("No List")
+
+		bool isFound = false;
+
 		Node<T> *currentNode = head;
 		Node<T> *prevNode = nullptr;
 		Node<T> *newNode = new Node<T>;
@@ -67,18 +79,30 @@ public:
 		}
 
 		while(currentNode != NULL && currentNode->data != target){
+			if (currentNode->data == target) {
+				newNode->next = prevNode->next;
+				prevNode->next = newNode;
+				isFound = true;
+				return;
+			}
+
 			prevNode = currentNode;
 			currentNode = currentNode->next;
 		}
 		
-		newNode->next = prevNode->next;
-		prevNode->next = newNode;
+		if (!isFound) throw runtime_error("Target Not Found")
+		
 	}
 
-	void insertAtPos(T pos,T data){
+	void insertAtPos(int pos,T data){
 		Node<T> *currentNode = head;
 		Node<T> *prevNode = nullptr;
 		Node<T> *newNode = new Node<T>;
+		
+		if (pos == 1) {
+			insertAtFront(data);
+			return;
+		}
 		newNode->data = data;
 
 		int count = 1;
@@ -123,42 +147,58 @@ public:
 	}
 
 	void deleteByData(T target){
-		Node<T> *currentNode = head;
-		Node<T> *prevNode = nullptr;
-		while(currentNode != nullptr && currentNode->data != target){
-			prevNode = currentNode;
-			currentNode = currentNode->next;
-		}
-		prevNode->next = currentNode->next;
-		delete currentNode;
-		currentNode = nullptr;
-		
-	}
+    Node<T> *currentNode = head;
+    Node<T> *prevNode = nullptr;
+
+    while(currentNode != nullptr && currentNode->data != target){
+        prevNode = currentNode;
+        currentNode = currentNode->next;
+    }
+
+    // Not found (also covers empty list)
+    if(currentNode == nullptr){
+        return;
+    }
+
+    // Deleting the head
+    if(prevNode == nullptr){
+        head = currentNode->next;
+    } else {
+        prevNode->next = currentNode->next;
+    }
+
+    delete currentNode;
+}
 	
-	void deleteByPosition(T target){
-		Node<T> *currentNode = head;
-		Node<T> *prevNode = nullptr;
-		int pos = 1;
+	void deleteByPosition(int position){
+    if (head == nullptr) throw runtime_error("List is Empty");
+    if (position < 1) throw runtime_error("Invalid position");
 
-		if (head == nullptr) throw runtime_error("List is Empty");
+    // Deleting the head
+    if (position == 1){
+        Node<T> *temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
 
-		if (target == 1){
-			head = currentNode->next;
-			delete currentNode;
-			currentNode = nullptr;
-		}
+    Node<T> *prevNode = head;
+    Node<T> *currentNode = head->next;
+    int pos = 2;
 
-		while(currentNode != nullptr){
-			if (pos == target){
-				prevNode->next = currentNode->next;
-				delete currentNode;
-				currentNode = nullptr;
-			}
-			prevNode = currentNode;
-			currentNode = currentNode->next;
-			pos++;
-		}
-	}
+    while (currentNode != nullptr){
+        if (pos == position){
+            prevNode->next = currentNode->next;
+            delete currentNode;
+            return;
+        }
+        prevNode = currentNode;
+        currentNode = currentNode->next;
+        pos++;
+    }
+
+    throw runtime_error("Position out of range");
+}
 
 	void reverse(){
 

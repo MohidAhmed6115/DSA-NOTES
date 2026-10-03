@@ -1,4 +1,6 @@
+#pragma once
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
 template <typename T>
@@ -70,6 +72,7 @@ public:
 			delete currentNode;
 			currentNode = nextNode;
 		}
+		top = nullptr
 	}
 
 	~Stack(){
