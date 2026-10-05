@@ -2,84 +2,96 @@
 using namespace std;
 
 template <typename T>
-struct Node{
+struct Node
+{
 	T data;
 	Node<T> *next;
 };
 
 template <typename T>
-class CircularLinkedList {
+class CircularLinkedList
+{
 private:
 	Node<T> *head = nullptr;
+
 public:
-	void insertAtFront(T data) {
+	void insertAtFront(T data)
+	{
 		Node<T> *newNode = new Node<T>;
 		newNode->data = data;
-		if (head == nullptr) {
+		if (head == nullptr)
+		{
 			head = newNode;
 			newNode->next = head;
 			return;
 		}
 
 		Node<T> *currentNode = head;
-		while( currentNode->next != head ) {
+		while (currentNode->next != head)
+		{
 			currentNode = currentNode->next;
 		}
 
 		newNode->next = head;
 		head = newNode;
 		currentNode->next = head;
-		cout<<"Inserted\n";
+		cout << "Inserted\n";
 	}
 
-	void insertAtEnd(T data) {
+	void insertAtEnd(T data)
+	{
 		Node<T> *newNode = new Node<T>;
 		newNode->data = data;
-		if (head == nullptr) {
+		if (head == nullptr)
+		{
 			head = newNode;
 			newNode->next = head;
 			return;
 		}
 
 		Node<T> *currentNode = head;
-		while (currentNode->next != head) {
+		while (currentNode->next != head)
+		{
 			currentNode = currentNode->next;
 		}
 		currentNode->next = newNode;
 		newNode->next = head;
-
-	}	
-
-	void insertAtPos(int pos,T data){
-		int count = 1;
-		Node<T> *newNode = new Node<T>;
-		newNode->data = data;
-		
-		if (pos == 1){
-			newNode->next = head;
-			head = newNode;
-			return;
-		}
-		
-		Node<T> *currentNode = head;
-		Node<T> *prevNode = nullptr;
-
-		while (currentNode != nullptr) {
-
-			if (pos == count){
-				prevNode->next = currentNode->next;
-				delete currentNode;
-				currentNode = nullptr;
-			}
-			
-			prevNode = currentNode;
-			currentNode = currentNode->next;
-
-		}
-
 	}
 
-	void display(){
+	void insertAtPos(int pos, T data)
+	{
+		if (pos < 1)
+			throw runtime_error("Invalid position");
+
+		if (pos == 1)
+		{
+			insertAtFront(data);
+			return;
+		}
+
+		if (head == nullptr)
+			throw runtime_error("Position out of range");
+
+		// Walk to the node just before the position, stop if we are back at the last node
+		Node<T> *prevNode = head;
+		int count = 1;
+		while (count < pos - 1 && prevNode->next != head)
+		{
+			prevNode = prevNode->next;
+			count++;
+		}
+
+		if (count < pos - 1)
+			throw runtime_error("Position out of range");
+
+		Node<T> *newNode = new Node<T>;
+		newNode->data = data;
+		newNode->next = prevNode->next;
+		prevNode->next = newNode;
+	}
+
+	void display()
+	{
 		Node<T> *currentNode = head;
 		// while(currentNode->next != head){
 		// 	cout<<currentNode->data<<" "<<currentNode->next<<endl;
@@ -88,15 +100,14 @@ public:
 		// cout<<currentNode->data<<" "<<currentNode->next<<endl;
 		do
 		{
-			cout<<currentNode->data<<" "<<currentNode->next<<endl;
+			cout << currentNode->data << " " << currentNode->next << endl;
 			currentNode = currentNode->next;
 		} while (currentNode != head);
-		
-		
 	}
 };
 
-int main() {
+int main()
+{
 	CircularLinkedList<int> Clist;
 	// Clist.insertAtFront(5);
 	// Clist.insertAtFront(10);
@@ -110,5 +121,4 @@ int main() {
 	Clist.insertAtEnd(35);
 
 	Clist.display();
-
 }

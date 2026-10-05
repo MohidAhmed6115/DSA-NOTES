@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <stdexcept>
+#include "stack_using_linkedlist.h"
 using namespace std;
 
 template <typename T>
@@ -43,7 +44,7 @@ public:
 	}
 
 	T peek(){
-		if (top == nullptr) throw runtime_error("Can't pop from empty Stack");
+		if (top == nullptr) throw runtime_error("Can\'t pop from empty Stack");
 
 		return top->data;
 	}
@@ -72,7 +73,7 @@ public:
 			delete currentNode;
 			currentNode = nextNode;
 		}
-		top = nullptr
+		top = nullptr;
 	}
 
 	~Stack(){

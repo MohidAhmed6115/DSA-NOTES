@@ -297,15 +297,18 @@ public:
 		Node<T> *front = head;
 		Node<T> *end = tail;
 		Node<T> *target = nullptr;
+		bool isFound = false;
 
 		while( front != nullptr && end != nullptr) {
 			
 			if (front->data == key) {
 				target = front;
+				isFound = true;
 				break;
 			}
 			if (end->data == key) {
 				target = end;
+				isFound = true;				
 				break;
 			}
 
@@ -314,10 +317,16 @@ public:
 
 		}
 
-		target->prev->next = target->next;
-		target->next->prev = target->prev;
-		delete target;
-		target = nullptr;
+		if (isFound) {
+
+			target->prev->next = target->next;
+			target->next->prev = target->prev;
+			delete target;
+			target = nullptr;
+		}else{
+			throw runtime_error("Target Not Found");
+		}
+
 
 	}
 

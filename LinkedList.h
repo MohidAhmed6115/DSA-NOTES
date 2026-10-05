@@ -13,6 +13,19 @@ template <typename T>
 class LinkedList {
 private:
 	Node<T> *head = nullptr;
+
+	int getSize()
+	{
+		int count = 0;
+		Node<T> *currentNode = head;
+		while (currentNode != nullptr)
+		{
+			currentNode = currentNode->next;
+			count++;
+		}
+		return count;
+	}
+
 public:
 	void insertAtFront(T data){
 		Node<T> *newNode = new Node<T>;				// Making a new Node
@@ -58,12 +71,12 @@ public:
 			currentNode = currentNode->next;
 		}
 		
-		if (!isFound) throw runtime_error("Target Not Found")
+		if (!isFound) throw runtime_error("Target Not Found");
 
 	}
 	void insertBeforeTarget(T target,T data){
 		
-		if (head == nullptr) throw runtime_error("No List")
+		if (head == nullptr) throw runtime_error("No List");
 
 		bool isFound = false;
 
@@ -78,7 +91,7 @@ public:
 			return;
 		}
 
-		while(currentNode != NULL && currentNode->data != target){
+		while(currentNode != NULL){
 			if (currentNode->data == target) {
 				newNode->next = prevNode->next;
 				prevNode->next = newNode;
@@ -90,7 +103,7 @@ public:
 			currentNode = currentNode->next;
 		}
 		
-		if (!isFound) throw runtime_error("Target Not Found")
+		if (!isFound) throw runtime_error("Target Not Found");
 		
 	}
 
@@ -103,6 +116,12 @@ public:
 			insertAtFront(data);
 			return;
 		}
+
+		if (pos == getSize() + 1) {
+			insertAtEnd(data);
+			return;
+		}
+
 		newNode->data = data;
 
 		int count = 1;

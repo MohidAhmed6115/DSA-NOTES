@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
 template <typename T>
@@ -12,11 +13,10 @@ private:
 	int o_size = 5;
 	T *arr = new T[size];
 	int elementCount = 0;
-	
+
 	// Function for resizing the array
 	void reSize(){
 		int newSize = size * 2;
-		size = newSize;
 		T *newArr = new T[newSize];
 		for(int i=0;i<elementCount;i++){
 			newArr[i] = arr[i];
@@ -25,30 +25,30 @@ private:
 		delete[] arr;
 
 		arr = newArr;
+		size = newSize;
 	}
 
 public:
-	
-	// It will return total elements in the array not the top filled index
-	int top(){
-		return arr[elementCount];
+
+	// Total elements in the stack
+	int getSize(){
+		return elementCount;
 	}
 
 	void push(T data){
-		// Checking if the array size is equal to the total elements present in the array for resizing
+		// Checking if the array is full for resizing
 		if (elementCount == size){
 			reSize();
 		}
-        elementCount++;
-		arr[elementCount] = data;
-
+		arr[elementCount] = data;		// Write first, then move the count
+		elementCount++;
 	}
 
-	// Removing the last added element implementing the LIFO "Last In Front Out" approach
+	// Removing the last added element implementing the LIFO "Last In First Out" approach
 	void pop(){
-		if (elementCount == -1)
+		if (elementCount == 0)
 			throw runtime_error("No elements in stack");
-		
+
 		elementCount--;
 	}
 
@@ -59,21 +59,20 @@ public:
 		}
 	}
 
-	// Checking if the stack is empty or not 
+	// Checking if the stack is empty or not
 	bool isEmpty(){
-		return (elementCount == 0) ? true: false;
+		return elementCount == 0;
 	}
 
 	void clear(){
 		delete[] arr;
 		elementCount = 0;
-		T *newArr = new T[o_size];
 		size = o_size;
-		arr = newArr;
+		arr = new T[o_size];
 	}
 
 	T peek(){
-		if (elementCount == 0) throw runtime_error("Stack is Empty")
+		if (elementCount == 0) throw runtime_error("Stack is Empty");
 
 		return arr[elementCount-1];
 	}
@@ -83,14 +82,8 @@ public:
 		delete[] arr;
 	}
 
+	// Copying would make two stacks share one array (double delete)
+	Stack() = default;
+	Stack(const Stack&) = delete;
+	Stack& operator=(const Stack&) = delete;
 };
-
-int main () {
-	
-	Stack<int> s;
-	s.push(5);
-	s.push(10);
-	s.push(20);
-	s.push(30);
-	cout<<s.top();
-}
