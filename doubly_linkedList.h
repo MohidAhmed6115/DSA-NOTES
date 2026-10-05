@@ -9,6 +9,7 @@ struct Node
 	T data;
 	Node *prev;
 	Node *next;
+	Node(T data) : data(data),prev(nullptr),next(nullptr){}
 };
 
 template <typename T>
@@ -41,9 +42,9 @@ public:
 	// Insertion At Front
 	void insertAtFront(T data)
 	{
-		Node<T> *newNode = new Node<T>;
-		newNode->data = data;
-		newNode->prev = nullptr;
+		Node<T> *newNode = new Node<T>(data);
+		
+		
 		newNode->next = head;
 
 		if (head == nullptr)
@@ -56,8 +57,8 @@ public:
 
 	void insertAtEnd(T data)
 	{
-		Node<T> *newNode = new Node<T>;
-		newNode->data = data;
+		Node<T> *newNode = new Node<T>(data);
+		
 		newNode->next = nullptr;
 		newNode->prev = tail;
 
@@ -92,8 +93,8 @@ public:
 		if (target == nullptr)
 			throw runtime_error("Target not found");
 
-		Node<T> *newNode = new Node<T>;
-		newNode->data = data;
+		Node<T> *newNode = new Node<T>(data);
+		
 		newNode->prev = target;
 		newNode->next = target->next;
 
@@ -137,8 +138,8 @@ public:
 			return;
 		}
 
-		Node<T> *newNode = new Node<T>;
-		newNode->data = data;
+		Node<T> *newNode = new Node<T>(data);
+		
 		newNode->next = target;
 		newNode->prev = target->prev;
 
@@ -192,15 +193,13 @@ public:
 				count++;
 			}
 		}
-		Node<T> *newNode = new Node<T>;
-		newNode->data = data;
+		Node<T> *newNode = new Node<T>(data);
+		
 		newNode->prev = currentNode->prev;
 		newNode->next = currentNode;
 
 		currentNode->prev->next = newNode;
 		currentNode->prev = newNode;
-
-
 	}
 
 	void deleteAtFront()
@@ -299,6 +298,14 @@ public:
 		Node<T> *target = nullptr;
 		bool isFound = false;
 
+		if (head == tail && (key == head->data || key == tail->data)){
+			delete head;
+			delete tail;
+			head = nullptr;
+			tail = nullptr;
+			return;
+		}
+
 		while( front != nullptr && end != nullptr) {
 			
 			if (front->data == key) {
@@ -317,7 +324,25 @@ public:
 
 		}
 
+		
+
 		if (isFound) {
+
+			if (target == head) {
+			head = target->next;
+			target->next->prev = nullptr;
+			delete target;
+			target = nullptr;
+			return;
+		}
+
+		if (target == tail) {
+			tail = target->prev;
+			target->prev->next = nullptr;
+			delete target;
+			target = nullptr;
+			return;
+		}
 
 			target->prev->next = target->next;
 			target->next->prev = target->prev;
@@ -326,8 +351,6 @@ public:
 		}else{
 			throw runtime_error("Target Not Found");
 		}
-
-
 	}
 
 	void display()
@@ -352,6 +375,15 @@ public:
 		{
 			cout << current->data << " ";
 			current = current->prev;
+		}
+	}
+	~DoublyLinkedList() {
+		Node<T> *currentNode = head;
+		while( currentNode != nullptr) {
+			Node<T> *del = currentNode;
+			currentNode = currentNode->next;
+			delete del
+			del = nullptr;
 		}
 	}
 };

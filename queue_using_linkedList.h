@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
 template <typename T>
@@ -31,12 +32,9 @@ public:
 	void dequeue(){
 
 		if (head == nullptr) throw runtime_error("Queue is empty");
-
-		// We have to attach head with the next of current first Node and then we will be able to delete first Node
 		Node<T> *currentNode = head;
 		head = currentNode->next;
 		delete currentNode;
-		// Deleting only deletes the data to which pointer is pointing to but pointer still points to freed memory so we have to make the pointer null so there would be no dangling pointer
 		currentNode = nullptr;
 	}
 
@@ -93,13 +91,3 @@ public:
 	}
 
 };
-
-
-int main () {
-	Queue<int> q;
-	q.enqueue(5);
-	q.enqueue(10);
-	q.enqueue(20);
-	q.enqueue(30);
-	cout<<q.size();
-}

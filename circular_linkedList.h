@@ -1,4 +1,6 @@
+#pragma once
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
 template <typename T>
@@ -35,7 +37,6 @@ public:
 		newNode->next = head;
 		head = newNode;
 		currentNode->next = head;
-		cout << "Inserted\n";
 	}
 
 	void insertAtEnd(T data)
@@ -92,33 +93,12 @@ public:
 
 	void display()
 	{
+		if (head == nullptr) cerr<<"Empty List"
 		Node<T> *currentNode = head;
-		// while(currentNode->next != head){
-		// 	cout<<currentNode->data<<" "<<currentNode->next<<endl;
-		// 	currentNode = currentNode->next;
-		// }
-		// cout<<currentNode->data<<" "<<currentNode->next<<endl;
 		do
 		{
-			cout << currentNode->data << " " << currentNode->next << endl;
+			cout << currentNode->data<< endl;
 			currentNode = currentNode->next;
 		} while (currentNode != head);
 	}
 };
-
-int main()
-{
-	CircularLinkedList<int> Clist;
-	// Clist.insertAtFront(5);
-	// Clist.insertAtFront(10);
-	// Clist.insertAtFront(15);
-	// Clist.insertAtFront(20);
-	// Clist.insertAtFront(25);
-
-	Clist.insertAtEnd(20);
-	Clist.insertAtEnd(25);
-	Clist.insertAtEnd(30);
-	Clist.insertAtEnd(35);
-
-	Clist.display();
-}
