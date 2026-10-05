@@ -58,6 +58,8 @@ class Tree {
 				if (currentNode->left != nullptr) {
 					currentNode = currentNode->left;
 					store.push(currentNode);
+				}else {
+					cout<<store.top();
 				}
 			}
 		}
