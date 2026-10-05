@@ -52,12 +52,12 @@ class Tree {
 
 		void display () {
 			Node<T> *currentNode = root;
-			Stack<T> store;
+			Stack<Node> store;
+			store.push(currentNode);
 			while (currentNode != nullptr) {
-				store.push(currentNode->data);
 				if (currentNode->left != nullptr) {
 					currentNode = currentNode->left;
-					store.push(currentNode->data);
+					store.push(currentNode);
 				}
 			}
 		}
