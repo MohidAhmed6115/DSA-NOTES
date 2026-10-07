@@ -80,6 +80,9 @@ class Tree {
 			return currentNode == nullptr ? false : true;
 		}
 
+		/**
+		 * In-Order Display
+		 */
 		void display () {
 
 			if (root == nullptr) throw runtime_error("Tree is Empty")
@@ -100,6 +103,19 @@ class Tree {
 		}
 
 };
+
+/**
+ * @todo
+ * Find Minimum and Maximum
+ * Count Nodes
+ * Height
+ * isEmpty
+ * PreOrder
+ * Level Order
+ * Delete a node
+ * Destructor
+ */
+
 
 int main () {
 	Tree<int> t;
