@@ -46,7 +46,7 @@ public:
 	T peek(){
 		if (top == nullptr) throw runtime_error("Can\'t pop from empty Stack");
 
-		return top;
+		return top->data;
 	}
 
 	bool isEmpty(){
